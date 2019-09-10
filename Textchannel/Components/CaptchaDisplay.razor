@@ -1,0 +1,16 @@
+﻿@using Textchannel.Services
+@inject AppState State
+
+@if(State.CurrentCaptcha != null)
+{
+    <img src="data:image/jpeg;charset=utf-8;base64, @State.CurrentCaptcha.Base64EncodedImage" alt="Captcha"/>
+}
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await State.GetCaptchaAsync();
+
+        State.OnChange += StateHasChanged;
+    }
+}

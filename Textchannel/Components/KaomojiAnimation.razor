@@ -1,0 +1,58 @@
+﻿@using System.Threading;
+@implements IDisposable
+
+<Box Style="@Box.BoxStyle.Regular">
+    <div class="kaomoji text_center">
+        @_animations[@_selectedAnimation][@_frame]
+    </div>
+</Box>
+
+@code {
+    private string[][] _animations = new string[2][];
+    private string[] _madAnimation = new string[]
+    {
+        "<(｀^´)>",
+        "―(｀^´)―",
+        "\\(｀^´)/"
+    };
+    private string[] _happyAnimation = new string[]
+    {
+        "     ✡～(◉ω◉)~",
+        "    ✡ ～(◉ω◉)~",
+        "   ✡  ～(◉ω◉)~",
+        "  ✡   ～(◉ω◉)~",
+        " ✡    ～(◉ω◉)~"
+    };
+    
+    private int _frame;
+    private int _selectedAnimation;
+    private const int _speed = 200;
+    private Timer _timer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _frame = 0;
+
+        // assign animations to jagged array
+        _animations[0] = _madAnimation;
+        _animations[1] = _happyAnimation;
+        // randomly select animation
+        _selectedAnimation = new Random().Next(0, _animations.Length);
+
+        _timer = new Timer(_ =>
+        {
+            if (_frame == _animations[_selectedAnimation].Length - 1)
+                _frame = 0;
+            else
+                _frame++;
+
+            this.StateHasChanged();
+        }, null, _speed, _speed);
+    }
+
+    public void Dispose()
+    {
+        _animations = null;
+        _timer.Dispose();
+    }
+}

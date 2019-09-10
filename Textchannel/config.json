@@ -1,0 +1,6 @@
+{
+  "cors": {
+    "host": "textbin.termer.net",
+    "origin": "http://localhost:50507"
+  } 
+}

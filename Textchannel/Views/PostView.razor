@@ -1,0 +1,44 @@
+﻿<!-- Thread View page -->
+@page "/{code}/{id}"
+@inject AppState State
+
+@if (State.CurrentPost != null)
+{
+    <Post ComponentPost="@State.CurrentPost">
+        <!-- OP Comment & Replies -->
+        @if (State.CurrentPostComments != null)
+        {
+            @foreach (var comment in State.CurrentPostComments)
+            {
+                <Comment ComponentComment="@comment" />
+            }
+        }
+        else
+        {
+            <KaomojiAnimation />
+        }
+    </Post>
+    <CommentForm/>
+}
+else
+{
+    <KaomojiAnimation />
+}
+
+@code {
+    [Parameter]
+    public string Code { get; set; }
+    [Parameter]
+    public string Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Code = Code ?? null;
+        Id = Id ?? null;
+        if (State.CurrentCategory == null)
+            await State.SetCurrentCategoryAsync(Code);
+
+        await State.SetCurrentPostAsync(Id);
+        State.OnChange += StateHasChanged;
+    }
+}

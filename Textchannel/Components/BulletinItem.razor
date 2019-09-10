@@ -1,0 +1,22 @@
+﻿@using Textchannel.Models
+@if(Bulletin != null)
+{
+    <Box Style="@Box.BoxStyle.Regular">
+        <div class="bulletin">
+            <h4>
+                <span class="comment_name">@Bulletin.Username</span>
+                <span class="comment_flare">@Bulletin.Flare</span>
+                <span class="comment_timestamp">@Bulletin.Date @Bulletin.Time</span>
+                <span class="comment_id">No. @Bulletin.Id</span>
+            </h4>
+            <div class="comment_text">
+                <span style="white-space: pre-wrap;">@Bulletin.Content</span>
+            </div>
+        </div>
+    </Box>
+}
+
+@code {
+    [Parameter]
+    public Bulletin Bulletin { get; set; }
+}

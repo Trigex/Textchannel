@@ -1,0 +1,40 @@
+﻿@using Textchannel.Services
+@inject AppState State
+
+<Box Style="@Box.BoxStyle.Regular">
+    <h3>Create a post</h3>
+    <table>
+        <tbody>
+            <tr>
+                <td>Title: </td>
+                <td>
+                    <input type="text" name="title_field" size="46" @bind="@Title" />
+                    <button @onclick="@(() => SubmitPost())">Submit</button>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <textarea name="text_field" cols="64" rows="5" @bind="@Text"></textarea>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</Box>
+
+@code {
+    private string Text;
+    private string Title;
+
+    private async Task SubmitPost()
+    {
+        if(Text != null && Title != null)
+        {
+            var post = await State.CreatePostAsync(Title, Text);
+            if(post != null)
+            {
+                await State.SetCurrentPostAsync(post);
+            }
+        }
+    }
+}

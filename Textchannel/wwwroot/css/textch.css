@@ -1,0 +1,265 @@
+﻿/* Sorts Mill Goudy font, used for kaomoji */
+@import url('https://fonts.googleapis.com/css?family=Sorts+Mill+Goudy&display=swap');
+/* Times New Roman, used for most text */
+@import url('https://www.fontify.me/wf/1cc89de3d33c62b9e9d8cdb0afa715aa');
+/* Submona, used for Shift_JIS art */
+@font-face {
+    font-family: 'submona';
+    src: url('submona.woff') format('woff');
+}
+
+* {
+    box-sizing: inherit;
+}
+
+body {
+    background: #C5AD99;
+    background-image: url('../img/ba.gif');
+    background-repeat: repeat;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    color: #000000;
+    font-family: font86463;
+}
+
+/* View containers */
+
+.main {
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+
+#sidebar_container {
+    height: 100%;
+    max-width: 13%;
+    position: fixed;
+    overflow-x: hidden;
+    z-index: 1;
+    background: #CFC;
+}
+
+#main_container {
+    margin-left: 13%;
+    padding: 5px;
+    padding-top: 10px;
+    z-index: 0;
+}
+
+/* Links */
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    color: cornflowerblue;
+}
+
+/* Sidebar Component */
+
+#sidebar_outer {
+    padding: 7px;
+    clear: both;
+    height: 100%;
+}
+
+#sidebar_inner {
+    height: 98%;
+    border: 1px inset grey;
+    padding: 6px;
+    word-wrap: break-word;
+}
+
+.sidebar_footer {
+    position: absolute;
+    bottom: 0;
+    color: cornflowerblue;
+}
+
+/* Sidebar banner */
+#banner_container {
+}
+
+#banner_container #banner_img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Box Component */
+
+.box_outer {
+    background: #CCFFCC;
+    border: 1px outset grey;
+    padding: 7px;
+    margin-bottom: 1em;
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    clear: both;
+}
+
+.box_inner {
+    border: 1px inset grey;
+    padding: 6px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+}
+
+.thread_outer {
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+    background: #EFEFEF;
+    padding: 7px;
+    margin-bottom: 2em;
+    clear: both;
+}
+
+.thread_inner {
+    border: 1px inset grey;
+    padding: 6px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Comment Component */
+.comment_text {
+    margin: 0.5em 0em 0em 3em;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.comment_name {
+    color: green;
+}
+
+.comment_trip {
+    color: red;
+}
+
+.comment_banned {
+    color: red;
+}
+
+.comment_timestamp {
+
+}
+
+.comment_flare {
+    color: yellow;
+}
+
+/* Toast Component */
+.toast {
+    display: none;
+    background-color: #CCFFCC;
+    z-index: 1;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    max-width: 450px;
+    padding: 6px;
+}
+
+.toast_inner {
+    border: 1px inset grey;
+}
+
+.toast_header {
+    padding: 7px;
+}
+
+.toast_kaomoji {
+    display: inline-block;
+}
+
+.toast_heading {
+    display: inline-block;
+}
+
+.toast_body {
+    text-align: center;
+}
+
+.toast_visible {
+    display: inline;
+    animation: fadein 0.5s;
+}
+
+/* ToastLevel classes */
+.toast_heading .toast_info {
+    color: black;
+}
+
+.toast_heading .toast_warning {
+    color: yellow;
+}
+
+.toast_heading .toast_error {
+    color: red;
+}
+
+.toast_heading .toast_success {
+    color: lightgreen;
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+/* Form Components */
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Misc */
+
+.text_center {
+    text-align: center;
+}
+
+.thread_title {
+    color: cornflowerblue;
+    padding-left: 5px;
+}
+
+html .kaomoji {
+    font-family: 'Sorts Mill Goudy', serif!important;
+    font-size: 2em;
+}
+
+html .aa {
+    font-family: IPAMonaPGothic, 'IPA モナー Pゴシック', Monapo, Mona, 'MS Pgothic', 'MS Pゴシック', submona;
+    font-size: 1em;
+}
+
+.thread_inner .thread_link {
+    padding-right: 0.5em;
+}

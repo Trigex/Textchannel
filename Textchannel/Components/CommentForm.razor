@@ -1,0 +1,73 @@
+﻿@using TextbinChannel.Services
+@using Textchannel.Services
+@inject AppState State
+@inject ToastService ToastService
+
+<div id="reply_box">
+    <Box Style="@Box.BoxStyle.Regular">
+        <h3>Post a comment</h3>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        Name:
+                        <input type="text" name="name_field" size="15" @bind="@Name" />
+                        Email:
+                        <input type="text" name="email_field" size="13" @bind="@Email" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Comment:
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea name="comment_field" cols="64" rows="5" @bind="@Comment"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <CaptchaDisplay/>
+                    </td>
+                </tr>
+                <tr><td>Captcha Solution: <input type="text" name="captcha_field" size="10" @bind="@CaptchaSolution" /></td></tr>
+                <tr><td><button @onclick="@(() => SubmitComment())">Submit</button></td></tr>
+            </tbody>
+        </table>
+    </Box>
+</div>
+
+@code {
+    private string Name { get; set; }
+    private string Email { get; set; }
+    private string Comment { get; set; }
+    private string CaptchaSolution { get; set; }
+
+    private async Task SubmitComment()
+    {
+        // only comment and captcha solution are required to have text
+        if(!IsInputEmpty(Comment) && !IsInputEmpty(CaptchaSolution))
+        {
+            var postId = State.CurrentPost.Id;
+            await State.CreateCommentAsync(CaptchaSolution.Trim(' '), postId, Comment, Name, Email);
+        } else
+        {
+            ToastService.ShowToast("Comment text and/or the captcha solution field were empty! Fix it dammit!", ToastLevel.Warning);
+        }
+    }
+
+    private bool IsInputEmpty(string input)
+    {
+        if (input == null)
+            return true;
+
+        if (input.Length < 1)
+            return true;
+
+        if (String.IsNullOrEmpty(input) || String.IsNullOrWhiteSpace(input))
+            return true;
+
+        return false;
+    }
+}

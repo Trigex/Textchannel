@@ -1,0 +1,77 @@
+﻿@using TextbinChannel.Services
+@implements IDisposable
+@inject ToastService ToastService
+
+@code {
+    protected string Heading { get; set; }
+    protected string Message { get; set; }
+    protected bool IsVisible { get; set; }
+    protected string LevelCssClass { get; set; }
+    protected string Kaomoji { get; set; }
+
+    private readonly string[] _infoLevel = new string[]{ "toast_info", "╮(︶▽︶)╭", "Info~" };
+    private readonly string[] _successLevel = new string[]{ "toast_success", "＼(￣▽￣)／", "Success!" };
+    private readonly string[] _warningLevel = new string[]{ "toast_warning", "(；￣Д￣)", "Warning!" };
+    private readonly string[] _errorLevel = new string[]{ "toast_error", "(＃`Д´)", "Error!!" };
+
+    protected override void OnInitialized()
+    {
+        ToastService.OnShow += ShowToast;
+        ToastService.OnHide += HideToast;
+    }
+
+    private void ShowToast(string message, ToastLevel level)
+    {
+        SetToastSettings(message, level);
+        IsVisible = true;
+        StateHasChanged();
+    }
+
+    private void HideToast()
+    {
+        IsVisible = false;
+        StateHasChanged();
+    }
+
+    private void SetToastSettings(string message, ToastLevel level)
+    {
+        Message = message;
+
+        switch(level)
+        {
+            case ToastLevel.Info:
+                ApplyToastLevel(_infoLevel);
+                break;
+            case ToastLevel.Success:
+                ApplyToastLevel(_successLevel);
+                break;
+            case ToastLevel.Warning:
+                ApplyToastLevel(_warningLevel);
+                break;
+            case ToastLevel.Error:
+                ApplyToastLevel(_errorLevel);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(level), level, null);
+        }
+    }
+
+    private void ApplyToastLevel(IReadOnlyList<string> levelData)
+    {
+        if(levelData.Count == 3)
+        {
+            LevelCssClass = levelData[0];
+            Kaomoji = levelData[1];
+            Heading = levelData[2];
+        } 
+        else
+        {
+            throw new Exception("Toast CSS Property array was not of the expected length");
+        }
+    }
+
+    public void Dispose()
+    {
+        ToastService.OnShow -= ShowToast;
+    }
+}

@@ -1,0 +1,42 @@
+﻿@using Textchannel.Services
+@inject AppState State
+
+<div id="sidebar_outer">
+    <div id="sidebar_inner">
+        <!-- Put banner here later -->
+        <Banner Image="/img/banners/speak_banner.png"/>
+        <div id="board_links">
+            @if (State.Categories != null)
+            {
+                @foreach (var category in State.Categories)
+                {
+                    <!-- The link doesn't actually reload the Category component if it's already been loaded once,
+                         so I attach an onclick handler which updates the category state -->
+                    <a href="/@category.Code/" @onclick="@(() => OnClick(@category.Code))">
+                        /@category.Code/ - @category.Name
+                    </a>
+                    <br/>
+                }
+            }
+        </div>
+        <span class="sidebar_footer">
+            <a href="https://github.com/trigex/Textchannel">Textchannel v0.1</a>
+            <br/>
+            <a href="https://trigex.moe">(c) 2019 Trigex</a>
+        </span>
+    </div>
+</div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await State.GetCategoriesAsync();
+    }
+
+    // handles category clicks
+    private async Task OnClick(string code)
+    {
+        // set our current category
+        await State.SetCurrentCategoryAsync(code);
+    }
+}

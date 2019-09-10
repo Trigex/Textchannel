@@ -1,0 +1,19 @@
+﻿@if(ComponentComment != null)
+{
+    <div class="post">
+        <h4>
+            <span class="comment_name">@ComponentComment.Name</span>
+            <span class="comment_timestamp">@ComponentComment.Date @ComponentComment.Time</span>
+            <span class="comment_id">No. @ComponentComment.Id</span>
+        </h4>
+
+        <div class="comment_text">
+            <span style="white-space: pre-wrap;">@ComponentComment.Text</span>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Models.Comment ComponentComment { get; set; }
+}

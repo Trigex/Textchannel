@@ -1,0 +1,27 @@
+﻿<!-- Home Page -->
+@page "/"
+@page "/home"
+@inject AppState State
+
+<Box Style="@Box.BoxStyle.Regular">
+    <h1 class="text_center">Textbin</h1>
+    <br/>
+    <h2>Bulletins</h2>
+    @if (State.Bulletins != null)
+    {
+        @foreach(var bulletin in State.Bulletins)
+        {
+            <BulletinItem Bulletin="@bulletin"/>
+        }
+    }
+</Box>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        if (State.Bulletins == null)
+            await State.GetBulletinsAsync();
+
+        State.OnChange += StateHasChanged;
+    }
+}

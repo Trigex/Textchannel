@@ -1,0 +1,13 @@
+﻿@if (Image != null)
+{
+    <div id="banner_container">
+        <a href="/home">
+            <img id="banner_img" src="@Image" alt="Textchannel Banner~"/>
+        </a>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Image { get; set; }
+}

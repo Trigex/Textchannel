@@ -1,0 +1,17 @@
+﻿@inherits ToastBase
+
+<div class="toast @(IsVisible ? "toast_visible" : null)">
+    <div class="toast_inner">
+        <div class="toast_header">
+            <div class="toast_kaomoji">
+                <span class="kaomoji">@Kaomoji</span>
+            </div>
+            <div class="toast_heading">
+                <h2 class="@LevelCssClass">@Heading</h2>
+            </div>
+        </div>
+        <div class="toast_body">
+            <h3>@Message</h3>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+﻿@if (Style == BoxStyle.Regular)
+{
+    <div class="box">
+        <div class="box_outer">
+            <div class="box_inner">
+                @ChildContent
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class='thread_outer'>
+        <div class='thread_inner'>
+            @ChildContent
+        </div>
+    </div>
+}
+
+
+@code {
+    public enum BoxStyle
+    {
+        Regular,
+        Thread
+    }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public BoxStyle Style { get; set; }
+}

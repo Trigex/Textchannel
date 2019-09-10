@@ -1,0 +1,23 @@
+﻿@inject NavigationManager NavigationManager
+
+@if(ComponentPost != null)
+{
+    <Box Style="@Box.BoxStyle.Thread">
+        <h1 class="thread_title">@ComponentPost.Name</h1>
+        <h5 @onclick="@JumpToReplyBox"><a>(Reply to Post)</a></h5>
+        @ChildContent
+    </Box>
+}
+
+@code {
+    [Parameter]
+    public Models.Post ComponentPost { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    private void JumpToReplyBox()
+    {
+        NavigationManager.NavigateTo($"{NavigationManager.Uri.TrimEnd('/')}#reply_box");
+    }
+}

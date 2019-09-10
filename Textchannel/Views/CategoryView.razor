@@ -1,0 +1,73 @@
+﻿<!-- Board view -->
+@page "/{code}"
+@inject AppState State
+
+    <div class="board">
+        @if (State.CurrentCategory != null)
+        {
+            <!-- Category Header -->
+            <Box Style="@Box.BoxStyle.Regular">
+                <div class="text_center">
+                    <h1>/@State.CurrentCategory.Code/ - @State.CurrentCategory.Name</h1>
+                    <h2>@State.CurrentCategory.Description</h2>
+                </div>
+            </Box>
+            @if (State.CurrentCategoryPosts != null)
+            {
+                <!-- Post List -->
+                <Box Style="@Box.BoxStyle.Thread">
+                    @if (State.CurrentCategoryPosts.Length == 0)
+                    {
+                        <div class="text_center">No posts were found! <span class="kaomoji">(°ロ°) !</span></div>
+                    }
+                    else
+                    {
+                        @foreach (var post in State.CurrentCategoryPosts)
+                        {
+                            
+                        }
+                        @for(var i=0;i<State.CurrentCategoryPosts.Length;i++)
+                        {
+                            <a href="/@State.CurrentCategory.Code/@State.CurrentCategoryPosts[i].Id/" @onclick="@(() => OnClick(@State.CurrentCategoryPosts[i].Id))" class="thread_link">
+                                @i:
+                                @State.CurrentCategoryPosts[i].Name
+                                @if (State.CurrentCategoryPosts[i].IsSticky) {<span>📌</span>}
+                            </a>
+                        }
+                    }
+                </Box>
+
+                <!-- New Post form -->
+                <PostForm />
+            }
+            else
+            {
+                <KaomojiAnimation />
+            }
+        }
+        else
+        {
+            <KaomojiAnimation />
+        }
+    </div>
+
+@code {
+    [Parameter]
+    public string Code { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Code = Code ?? null;
+        if (State.CurrentCategory == null)
+            await State.SetCurrentCategoryAsync(Code);
+
+        State.OnChange += StateHasChanged;
+    }
+
+    // handles post clicks
+    private async Task OnClick(string postId)
+    {
+        await State.SetCurrentPostAsync(postId);
+        Console.WriteLine(State.CurrentPost.Name);
+    }
+}
